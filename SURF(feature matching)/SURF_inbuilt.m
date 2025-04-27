@@ -1,0 +1,41 @@
+clc;
+clear all;
+close all;
+
+a11=imread('D:\feb_1_2021\submitted publications\combine_work\major revision\future_use\image\ref_9.tif');
+b11=imread('D:\feb_1_2021\submitted publications\combine_work\major revision\future_use\image\sensed_9.tif');
+ %a11=imread('cameraman.tif');
+ %b11=imrotate(a11,50);
+
+[H1 W1]=size(a11);
+[H2 W2]=size(b11);
+x1=round((0.4*H1*W1)/100);
+x2=round((0.4*H2*W2)/100);
+
+image_1=a11;
+image_2=b11;
+change_form='similarity';
+
+tic
+points11 = detectSURFFeatures(image_1);
+points1=points11.selectStrongest(x1);
+locs_1 =points1.Location;
+points22 = detectSURFFeatures(image_2);
+points2=points22.selectStrongest(x2);
+locs_2 =points2.Location;
+
+[descriptors_1,vpts1] = extractFeatures(image_1,points1);
+[descriptors_2,vpts2] = extractFeatures(image_2,points2);
+
+
+[cor11,cor22]=match(image_2, image_1,descriptors_2,double(locs_2),descriptors_1,double(locs_1),change_form);
+[solution,rmse2,cor_n31,cor_n32]=FSC(cor11(:,1:2),cor22(:,1:2),change_form,1.2);
+button4=appendimages(im2double(a11),im2double(b11),cor_n32,cor_n31);
+toc
+tform=maketform('affine',solution');
+[M,N,P]=size(image_1);
+ff=imtransform(image_2,tform, 'XData',[1 N], 'YData',[1 M]);
+
+figure,imshow(ff,[]);
+
+%%% imwrite(ff,'');
