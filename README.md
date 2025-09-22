@@ -13,12 +13,12 @@ This repository implements state-of-the-art deep learning architectures for **sa
 
 ### 🎯 Key Features
 
-- **🌟 U-Net with ASPP (Atrous Spatial Pyramid Pooling)** - Primary model architecture
-- **Attention Mechanisms** for enhanced feature focusing
-- **Multiple Model Implementations** for comparative analysis
+- **🌟 U-Net with ASPP (Atrous Spatial Pyramid Pooling)** - Primary model achieving **96.49% PCC**
+- **SURF-based Dataset Preparation** for image matching and alignment
+- **Multiple Model Implementations** for comprehensive comparison
 - **Pre-trained Models** ready for inference
-- **Traditional vs Deep Learning** comparison using SURF feature matching
-- **Comprehensive Dataset** with ground truth annotations
+- **Traditional vs Deep Learning** comparison across multiple datasets
+- **Comprehensive Performance Analysis** with detailed benchmarking
 
 ## 🏗️ U-Net ASPP Architecture Overview
 
@@ -39,10 +39,10 @@ Our **primary model** is a **U-Net with ASPP (Atrous Spatial Pyramid Pooling)** 
 │   ├── Ground truth.png
 │   ├── Image 1.png            # Before image
 │   ├── Image 2.png            # After image
-│   ├── Image Matching.png
+│   ├── Image Matching.png     # SURF feature matching visualization
 │   └── Unet output.png
 ├── 📁 DATASET/
-├── 📁 SURF(feature matching)/  # Traditional feature matching
+├── 📁 SURF(feature matching)/  # SURF-based image alignment & preprocessing
 ├── 📄 ALL_Models.ipynb         # Comprehensive model comparison
 ├── 📄 CNN_SVM_Transformer.ipynb  # Hybrid CNN-SVM + Transformer experiments
 ├── 📄 Custom_Advanced_Unet.ipynb # 🌟 U-Net ASPP main implementation
@@ -52,6 +52,13 @@ Our **primary model** is a **U-Net with ASPP (Atrous Spatial Pyramid Pooling)** 
 ```
 
 ## 🖼️ Visual Results
+
+### Dataset Preparation with SURF Feature Matching
+
+<div align="center">
+  <img src="https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection/blob/main/Images/Image%20Matching.png" alt="SURF Feature Matching" width="800">
+  <p><i>SURF-based feature matching for image alignment and dataset preparation</i></p>
+</div>
 
 ### Input Images and Change Detection Results
 
@@ -82,7 +89,15 @@ git clone https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection.git
 cd Remote-Sensing-Change-Detection
 ```
 
-2. **Run the main U-Net ASPP model:**
+2. **Dataset Preparation with SURF:**
+```python
+# SURF-based feature matching for image alignment
+import cv2
+sift = cv2.SIFT_create()
+# Feature matching and geometric transformation for co-registration
+```
+
+3. **Run the main U-Net ASPP model:**
 ```python
 # Load the pre-trained U-Net ASPP model
 from tensorflow.keras.models import load_model
@@ -92,66 +107,85 @@ model = load_model('unet_model.h5')
 change_map = model.predict([image1, image2])
 ```
 
-3. **Training U-Net ASPP from scratch:**
-```bash
-# Open and run Custom_Advanced_Unet.ipynb (U-Net ASPP implementation)
-jupyter notebook Custom_Advanced_Unet.ipynb
-```
+## 📊 Model Performance - Comprehensive Benchmarking
 
-## 📊 Model Performance
+### Performance Metrics Across Multiple Datasets
 
-| Model | IoU Score | F1 Score | Precision | Recall |
-|-------|-----------|----------|-----------|--------|
-| **U-Net ASPP** | **0.834** | **0.887** | **0.891** | **0.883** |
-| Vanilla U-Net | 0.756 | 0.821 | 0.798 | 0.845 |
-| CNN + SVM | 0.698 | 0.772 | 0.758 | 0.787 |
-| SURF Matching | 0.542 | 0.634 | 0.612 | 0.658 |
+| Dataset | Model | PCC (%) | PFA (%) | PTE (%) |
+|---------|-------|---------|---------|---------|
+| **SET 1** | **U-Net ASPP (Proposed)** | **96.42** | **0.67** | **3.58** |
+| SET 1 | Siamese U-Net | 94.11 | 4.40 | 5.89 |
+| SET 1 | Siamese CNN | 95.13 | 2.31 | 3.87 |
+| SET 1 | U-Net | 88.64 | 20.34 | 11.16 |
+| SET 1 | CNN | 88.69 | 11.27 | 11.31 |
+| SET 1 | SVM | 83.05 | 16.00 | 16.95 |
+| SET 1 | RF | 76.35 | 24.00 | 23.65 |
+| | | | | |
+| **SET 3** | **U-Net ASPP (Proposed)** | **96.49** | **0.17** | **3.50** |
+| SET 3 | Siamese U-Net | 94.54 | 2.89 | 5.46 |
+| SET 3 | Siamese CNN | 93.69 | 1.70 | 4.31 |
+| SET 3 | U-Net | 92.56 | 20.68 | 7.44 |
+| SET 3 | CNN | 90.27 | 9.40 | 9.40 |
+| SET 3 | SVM | 83.13 | 19.00 | 16.87 |
+| SET 3 | RF | 87.41 | 13.00 | 12.59 |
+| | | | | |
+| **SET 5** | **U-Net ASPP (Proposed)** | **95.46** | **12.54** | **4.54** |
+| SET 5 | U-Net | 94.46 | 18.57 | 6.92 |
+| SET 5 | SVM | 85.04 | 14.00 | 14.96 |
+| SET 5 | CNN | 84.60 | 15.79 | 15.40 |
+| SET 5 | RF | 83.31 | 16.00 | 16.69 |
+| SET 5 | Siamese CNN | 65.87 | 35.08 | 34.13 |
+| SET 5 | Siamese U-Net | 59.39 | 41.80 | 40.61 |
 
-*U-Net ASPP significantly outperforms baseline models with superior change detection accuracy.*
+**Legend:**
+- **PCC:** Percentage of Correctly Classified pixels
+- **PFA:** Percentage of False Alarms  
+- **PTE:** Percentage of Total Error
 
-## 🔬 U-Net ASPP Methodology
+*Our U-Net ASPP model consistently achieves the highest accuracy across all test datasets with minimal false alarms.*
 
-### 1. ASPP (Atrous Spatial Pyramid Pooling)
-- **Multi-scale feature extraction** using parallel dilated convolutions
-- **Dilation rates:** [6, 12, 18] for capturing different spatial contexts
-- **Global pooling branch** for image-level features
-- **Feature fusion** combining all branches for rich representation
+## 🔬 Methodology
 
-### 2. Model Architecture
+### 1. Dataset Preparation with SURF
+- **SURF Feature Detection** for robust keypoint identification
+- **Feature Matching** using FLANN-based matcher
+- **Geometric Transformation** for precise image co-registration
+- **Alignment Verification** ensuring pixel-level correspondence
+
+### 2. U-Net ASPP Architecture
 - **Encoder:** Feature extraction with downsampling + ASPP bottleneck
-- **ASPP Module:** Multi-scale context aggregation at the bottleneck
+- **ASPP Module:** Multi-scale context aggregation with dilation rates [6, 12, 18]
 - **Decoder:** Upsampling with skip connections and attention gates
 - **Output:** Binary change probability map with sigmoid activation
 
-### 3. Loss Function
+### 3. Training Strategy
 ```python
-# Combination of Binary Cross-Entropy and Dice Loss for U-Net ASPP
-loss = binary_crossentropy + dice_loss
+# Loss function combining Binary Cross-Entropy and Dice Loss
+loss = binary_crossentropy + dice_coefficient_loss
+optimizer = Adam(learning_rate=1e-4)
 ```
 
 ## 📈 Applications
 
-- 🏙️ **Urban Development Monitoring**
-- 🌿 **Environmental Change Assessment** 
-- 🚨 **Disaster Impact Analysis**
-- 🛣️ **Infrastructure Development Tracking**
-- 🌍 **Land Use/Land Cover Change Detection**
+- 🏙️ **Urban Development Monitoring** - Track construction and infrastructure changes
+- 🌿 **Environmental Assessment** - Monitor deforestation, land cover changes
+- 🚨 **Disaster Impact Analysis** - Assess damage from natural disasters
+- 🛣️ **Infrastructure Development** - Monitor road networks and building construction
+- 🌍 **Climate Change Studies** - Analyze long-term environmental variations
 
 ## 🔧 Technical Details
 
 ### U-Net ASPP Specifications
-- **Input:** Two RGB images (256×256×3)
+- **Input:** Two co-registered RGB images (256×256×3)
 - **Output:** Binary change map (256×256×1)  
 - **Architecture:** U-Net with ASPP bottleneck and attention mechanisms
 - **ASPP Dilation Rates:** [6, 12, 18] + Global Average Pooling
-- **Training:** Adam optimizer, learning rate 1e-4
-- **Batch Size:** 16
-- **Epochs:** 100 with early stopping
+- **Training:** Adam optimizer, learning rate 1e-4, batch size 16
+- **Performance:** Up to **96.49% accuracy** with **0.17% false alarms**
 
 ### Technologies Used
 - ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 - ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat&logo=tensorflow&logoColor=white)
-- ![Keras](https://img.shields.io/badge/Keras-D00000?style=flat&logo=keras&logoColor=white)
 - ![OpenCV](https://img.shields.io/badge/OpenCV-27338e?style=flat&logo=opencv&logoColor=white)
 - ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white)
 - ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
@@ -161,9 +195,9 @@ loss = binary_crossentropy + dice_loss
 - [ ] **Improved ASPP Design** with adaptive dilation rates
 - [ ] **Vision Transformer Integration** for better long-range dependencies
 - [ ] **Self-Supervised Pre-training** on large satellite datasets
-- [ ] **Multi-temporal Change Detection** for time-series analysis  
-- [ ] **Uncertainty Quantification** for confidence estimation
-- [ ] **Real-time Processing** optimization for operational use
+- [ ] **Multi-temporal Analysis** for time-series change detection  
+- [ ] **Uncertainty Quantification** with confidence maps
+- [ ] **Real-time Processing** optimization for operational deployment
 
 ## 📚 Related Publications
 
@@ -175,6 +209,12 @@ This U-Net ASPP work contributes to ongoing research in remote sensing change de
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -183,6 +223,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Thanks to the remote sensing research community for valuable insights
 - Inspired by DeepLab's ASPP module and U-Net architecture
+- SURF algorithm implementation for robust feature matching
 - Special appreciation for open-source satellite imagery datasets
 
 ## 📞 Contact
