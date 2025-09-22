@@ -13,39 +13,41 @@ This repository implements state-of-the-art deep learning architectures for **sa
 
 ### 🎯 Key Features
 
-- **Custom U-Net Architecture** with attention mechanisms and ASPP (Atrous Spatial Pyramid Pooling)
+- **🌟 U-Net with ASPP (Atrous Spatial Pyramid Pooling)** - Primary model architecture
+- **Attention Mechanisms** for enhanced feature focusing
 - **Multiple Model Implementations** for comparative analysis
 - **Pre-trained Models** ready for inference
 - **Traditional vs Deep Learning** comparison using SURF feature matching
 - **Comprehensive Dataset** with ground truth annotations
 
-## 🏗️ Architecture Overview
+## 🏗️ U-Net ASPP Architecture Overview
 
-Our primary model is a **Custom Advanced U-Net** that incorporates:
+Our **primary model** is a **U-Net with ASPP (Atrous Spatial Pyramid Pooling)** that incorporates:
 
-- ✅ **Attention Gates** for better feature focusing
-- ✅ **ASPP Bottleneck** for multi-scale context understanding  
-- ✅ **Skip Connections** with enhanced feature fusion
+- ✅ **ASPP Module** for multi-scale context understanding at different dilation rates
+- ✅ **Attention Gates** for better feature focusing and reduced noise
+- ✅ **Enhanced Skip Connections** with feature fusion mechanisms
 - ✅ **Binary Change Map Output** for precise change localization
+- ✅ **Bottleneck Design** with dilated convolutions for larger receptive fields
 
 ## 📂 Repository Structure
 
 ```
 📦 Remote-Sensing-Change-Detection
+├── 📁 Images/                  # Input satellite/aerial images
+│   ├── Architecture.png
+│   ├── Ground truth.png
+│   ├── Image 1.png            # Before image
+│   ├── Image 2.png            # After image
+│   ├── Image Matching.png
+│   └── Unet output.png
 ├── 📁 DATASET/
-│   ├── 📁 Images/              # Input satellite/aerial images
-│   │   ├── Architecture.png
-│   │   ├── Ground truth.png
-│   │   ├── Image 1.png         # Before image
-│   │   ├── Image 2.png         # After image
-│   │   ├── Image Matching.png
-│   │   └── Unet output.png
-│   └── 📁 SURF(feature matching)/  # Traditional feature matching
+├── 📁 SURF(feature matching)/  # Traditional feature matching
 ├── 📄 ALL_Models.ipynb         # Comprehensive model comparison
 ├── 📄 CNN_SVM_Transformer.ipynb  # Hybrid CNN-SVM + Transformer experiments
-├── 📄 Custom_Advanced_Unet.ipynb # 🌟 Main model implementation
+├── 📄 Custom_Advanced_Unet.ipynb # 🌟 U-Net ASPP main implementation
 ├── 📄 Vanilla_Unet.ipynb      # Baseline U-Net model
-├── 📄 unet_model.h5           # Pre-trained model weights
+├── 📄 unet_model.h5           # Pre-trained U-Net ASPP model weights
 └── 📄 README.md
 ```
 
@@ -53,15 +55,15 @@ Our primary model is a **Custom Advanced U-Net** that incorporates:
 
 ### Input Images and Change Detection Results
 
-| Before (Image 1) | After (Image 2) | Ground Truth | Model Output |
-|:----------------:|:---------------:|:------------:|:------------:|
-| ![Input 1](DATASET/Images/Image%201.png) | ![Input 2](DATASET/Images/Image%202.png) | ![GT](DATASET/Images/Ground%20truth.png) | ![Output](DATASET/Images/Unet%20output.png) |
+| Before (Image 1) | After (Image 2) | Ground Truth | U-Net ASPP Output |
+|:----------------:|:---------------:|:------------:|:----------------:|
+| ![Input 1](https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection/blob/main/Images/Image%201.png) | ![Input 2](https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection/blob/main/Images/Image%202.png) | ![GT](https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection/blob/main/Images/Ground%20truth.png) | ![Output](https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection/blob/main/Images/Unet%20output.png) |
 
-### Model Architecture
+### U-Net ASPP Architecture
 
 <div align="center">
-  <img src="DATASET/Images/Architecture.png" alt="U-Net Architecture" width="800">
-  <p><i>Custom U-Net Architecture with Attention Gates and ASPP</i></p>
+  <img src="https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection/blob/main/Images/Architecture.png" alt="U-Net ASPP Architecture" width="800">
+  <p><i>U-Net Architecture with ASPP (Atrous Spatial Pyramid Pooling) and Attention Gates</i></p>
 </div>
 
 ## 🚀 Quick Start
@@ -80,9 +82,9 @@ git clone https://github.com/hemanthpadala03/Remote-Sensing-Change-Detection.git
 cd Remote-Sensing-Change-Detection
 ```
 
-2. **Run the main model:**
+2. **Run the main U-Net ASPP model:**
 ```python
-# Load the pre-trained model
+# Load the pre-trained U-Net ASPP model
 from tensorflow.keras.models import load_model
 model = load_model('unet_model.h5')
 
@@ -90,9 +92,9 @@ model = load_model('unet_model.h5')
 change_map = model.predict([image1, image2])
 ```
 
-3. **Training from scratch:**
+3. **Training U-Net ASPP from scratch:**
 ```bash
-# Open and run Custom_Advanced_Unet.ipynb
+# Open and run Custom_Advanced_Unet.ipynb (U-Net ASPP implementation)
 jupyter notebook Custom_Advanced_Unet.ipynb
 ```
 
@@ -100,44 +102,48 @@ jupyter notebook Custom_Advanced_Unet.ipynb
 
 | Model | IoU Score | F1 Score | Precision | Recall |
 |-------|-----------|----------|-----------|--------|
+| **U-Net ASPP** | **0.834** | **0.887** | **0.891** | **0.883** |
 | Vanilla U-Net | 0.756 | 0.821 | 0.798 | 0.845 |
-| **Custom U-Net** | **0.834** | **0.887** | **0.891** | **0.883** |
 | CNN + SVM | 0.698 | 0.772 | 0.758 | 0.787 |
 | SURF Matching | 0.542 | 0.634 | 0.612 | 0.658 |
 
-## 🔬 Methodology
+*U-Net ASPP significantly outperforms baseline models with superior change detection accuracy.*
 
-### 1. Data Preprocessing
-- Image normalization and resizing
-- Data augmentation (rotation, flipping, scaling)
-- Patch-based training for memory efficiency
+## 🔬 U-Net ASPP Methodology
+
+### 1. ASPP (Atrous Spatial Pyramid Pooling)
+- **Multi-scale feature extraction** using parallel dilated convolutions
+- **Dilation rates:** [6, 12, 18] for capturing different spatial contexts
+- **Global pooling branch** for image-level features
+- **Feature fusion** combining all branches for rich representation
 
 ### 2. Model Architecture
-- **Encoder:** Feature extraction with downsampling
-- **Bottleneck:** ASPP for multi-scale feature aggregation
+- **Encoder:** Feature extraction with downsampling + ASPP bottleneck
+- **ASPP Module:** Multi-scale context aggregation at the bottleneck
 - **Decoder:** Upsampling with skip connections and attention gates
-- **Output:** Binary change probability map
+- **Output:** Binary change probability map with sigmoid activation
 
 ### 3. Loss Function
 ```python
-# Combination of Binary Cross-Entropy and Dice Loss
+# Combination of Binary Cross-Entropy and Dice Loss for U-Net ASPP
 loss = binary_crossentropy + dice_loss
 ```
 
 ## 📈 Applications
 
 - 🏙️ **Urban Development Monitoring**
-- 🌿 **Environmental Change Assessment**
+- 🌿 **Environmental Change Assessment** 
 - 🚨 **Disaster Impact Analysis**
 - 🛣️ **Infrastructure Development Tracking**
 - 🌍 **Land Use/Land Cover Change Detection**
 
 ## 🔧 Technical Details
 
-### Model Specifications
+### U-Net ASPP Specifications
 - **Input:** Two RGB images (256×256×3)
 - **Output:** Binary change map (256×256×1)  
-- **Architecture:** Custom U-Net with attention mechanisms
+- **Architecture:** U-Net with ASPP bottleneck and attention mechanisms
+- **ASPP Dilation Rates:** [6, 12, 18] + Global Average Pooling
 - **Training:** Adam optimizer, learning rate 1e-4
 - **Batch Size:** 16
 - **Epochs:** 100 with early stopping
@@ -152,6 +158,7 @@ loss = binary_crossentropy + dice_loss
 
 ## 📊 Future Enhancements
 
+- [ ] **Improved ASPP Design** with adaptive dilation rates
 - [ ] **Vision Transformer Integration** for better long-range dependencies
 - [ ] **Self-Supervised Pre-training** on large satellite datasets
 - [ ] **Multi-temporal Change Detection** for time-series analysis  
@@ -160,7 +167,7 @@ loss = binary_crossentropy + dice_loss
 
 ## 📚 Related Publications
 
-This work contributes to ongoing research in remote sensing change detection:
+This U-Net ASPP work contributes to ongoing research in remote sensing change detection:
 
 > **"A Novel Change Detection Algorithm using Custom U-Net with Attention Gates, ASPP, and Bottleneck Mechanism for Optical Images"** - *Under Review, International Journal of Remote Sensing*
 
@@ -175,7 +182,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgements
 
 - Thanks to the remote sensing research community for valuable insights
-- Inspired by U-Net architecture and attention mechanisms
+- Inspired by DeepLab's ASPP module and U-Net architecture
 - Special appreciation for open-source satellite imagery datasets
 
 ## 📞 Contact
