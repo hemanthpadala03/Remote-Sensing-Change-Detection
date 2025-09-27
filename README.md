@@ -224,7 +224,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Thanks to the remote sensing research community for valuable insights
 - Inspired by DeepLab's ASPP module and U-Net architecture
 - SURF algorithm implementation for robust feature matching
-- Special appreciation for open-source satellite imagery datasets
 
 ## 📞 Contact
 
